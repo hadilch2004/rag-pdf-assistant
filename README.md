@@ -13,6 +13,7 @@
 
 ![Answer](images/answer.png)
 
+<img width="1440" height="900" alt="inngest" src="https://github.com/user-attachments/assets/28d9f34d-2b6f-4c8d-923c-a8d835a19505" />
 
 ![Python](https://img.shields.io/badge/Python-3.14-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
@@ -20,7 +21,7 @@
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-black)
 ![Qdrant](https://img.shields.io/badge/Qdrant-Vector%20DB-orange)
 
-A Retrieval-Augmented Generation (RAG) application that lets users upload PDF documents and ask natural language questions about their contents.
+A Retrieval-Augmented Generation (RAG) application that lets users upload PDF documents and ask natural language questions about their contents. The project uses Inngest to orchestrate asynchronous PDF ingestion, allowing document processing to run as an event-driven workflow.
 
 Instead of relying only on an LLM's built-in knowledge, the application retrieves relevant document chunks using semantic search before generating an answer.
 
@@ -41,31 +42,37 @@ Instead of relying only on an LLM's built-in knowledge, the application retrieve
 
 ## 🏗 Architecture
 
-```text
-           PDF
-            │
-            ▼
-     LlamaIndex Reader
-            │
-            ▼
-    Sentence Splitter
-            │
-            ▼
- OpenAI Embeddings
-            │
-            ▼
- Qdrant Vector Database
-            │
-            ▼
- Semantic Search
-            │
-            ▼
-        GPT-4o
-            │
-            ▼
-      Final Answer
-```
-
+           PDF Upload
+                │
+                ▼
+          FastAPI API
+                │
+                ▼
+        Inngest Event Trigger
+                │
+                ▼
+        PDF Processing Worker
+                │
+                ▼
+      LlamaIndex PDF Reader
+                │
+                ▼
+       Sentence Splitter
+                │
+                ▼
+     OpenAI Embeddings
+                │
+                ▼
+   Qdrant Vector Database
+                │
+                ▼
+      Semantic Retrieval
+                │
+                ▼
+            GPT-4o
+                │
+                ▼
+         Generated Answer
 ---
 
 ## ⚙️ Tech Stack
@@ -80,7 +87,7 @@ Instead of relying only on an LLM's built-in knowledge, the application retrieve
 | Docker | Runs Qdrant |
 | Inngest | Event Workflow |
 | LlamaIndex | PDF Processing |
-
+| Inngest |Event-driven workflow orchestration |
 ---
 
 ## 🚀 How It Works
@@ -151,3 +158,5 @@ OPENAI_API_KEY=your_api_key_here
 ## 📄 License
 
 Educational project.
+
+
