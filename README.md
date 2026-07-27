@@ -13,8 +13,6 @@
 
 ![Answer](images/answer.png)
 
-<img width="1440" height="900" alt="inngest" src="https://github.com/user-attachments/assets/28d9f34d-2b6f-4c8d-923c-a8d835a19505" />
-
 ![Python](https://img.shields.io/badge/Python-3.14-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-red)
