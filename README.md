@@ -1,4 +1,18 @@
 # 📚 RAG PDF Assistant
+## 📸 Application Preview
+
+### Home Screen
+
+![Home Screen](images/home.png)
+
+### Uploading a PDF
+
+![Upload PDF](images/upload.png)
+
+### Asking Questions
+
+![Answer](images/answer.png)
+
 
 ![Python](https://img.shields.io/badge/Python-3.14-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
