@@ -59,10 +59,17 @@ async def rag_ingest_pdf(ctx: inngest.Context):
             for i in range(len(chunks))
         ]
 
-        QdrantStorage().upsert(ids, vecs, payloads) ##insert/ update into vector db
-        return { 
-            "ingested": len(chunks),
+        #QdrantStorage().upsert(ids, vecs, payloads) ##insert/ update into vector db
+        #return { 
+        #    "ingested": len(chunks),
+        #}
+
+        store = QdrantStorage()
+        store.delete_source(source_id)        # remove all old chunks of this file
+        store.upsert(ids, vecs, payloads)     # write the new ones
+        return {"ingested": len(chunks)
         }
+    
     chunks_and_src = await ctx.step.run(
         "load-and-chunck",
         lambda: _load(ctx)

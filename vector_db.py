@@ -1,6 +1,8 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance, PointStruct
-
+from qdrant_client.models import (
+    VectorParams, Distance, PointStruct,
+    Filter, FieldCondition, MatchValue, FilterSelector,
+)
 
 class QdrantStorage:
     def __init__(self, url="http://localhost:6333", collection="docs", dim=3072):
@@ -56,3 +58,14 @@ class QdrantStorage:
             "contexts": contexts,
             "sources": list(sources),
         }
+
+    def delete_source(self, source_id: str):
+        self.client.delete(
+            collection_name=self.collection,
+            points_selector=FilterSelector(
+                filter=Filter(
+                    must=[FieldCondition(key="source", match=MatchValue(value=source_id))]
+                )
+            ),
+        )
+        

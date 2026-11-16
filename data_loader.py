@@ -25,10 +25,22 @@ def load_and_chunk_pdf(path: str):
     return chuncks
 
 #pass text to openai to get embeddings
-def embed_texts(texts:list[str])->list[list[float]]:#returns vectors from str
+#def embed_texts(texts:list[str])->list[list[float]]:#returns vectors from str
     response = client.embeddings.create(
         model=EMBED_MODEL,
         input=texts
     )
     return [item.embedding for item in response.data]###
 #pdf turned into vectors, now store them in vector db
+
+BATCH_SIZE = 100  # 100 chunks × ~1000 tokens ≈ 100k tokens, well under the limit
+
+
+#fixing for bigger pdfs, sending the chunks in batches then joining
+def embed_texts(texts: list[str]) -> list[list[float]]:
+    vectors = []
+    for start in range(0, len(texts), BATCH_SIZE):
+        batch = texts[start:start + BATCH_SIZE]
+        response = client.embeddings.create(model=EMBED_MODEL, input=batch)
+        vectors.extend(item.embedding for item in response.data)
+    return vectors
